@@ -5,6 +5,8 @@ import com.baton.jsontoview.data.ViewApi
 import com.example.kyrs.di.ServerPath
 import com.baton.jsontoview.di.providers.ApiProvider
 import com.baton.jsontoview.di.providers.OkHttpClientProvider
+import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
+import com.baton.jsontoview.utils.viewProperty.ViewProperty
 import okhttp3.OkHttpClient
 import toothpick.config.Module
 
@@ -27,5 +29,7 @@ class ServerModule(baseUrl: String) : Module() {
 
         // Repositories
         bind(ViewsRepository::class.java).singleton()
+
+        bind(ViewPropertiesFactory::class.java).singleton()
     }
 }

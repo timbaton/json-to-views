@@ -1,15 +1,11 @@
 package com.baton.jsontoview.utils.viewBuilder
 
-import android.R
 import android.content.Context
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.Spinner
 import com.baton.jsontoview.data.entity.Element
-import com.baton.jsontoview.data.entity.MyView
-import com.baton.jsontoview.utils.command.CommandFactory
+import com.baton.jsontoview.utils.enums.ViewType
+import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
+import javax.inject.Inject
 
 
 /**
@@ -19,41 +15,27 @@ import com.baton.jsontoview.utils.command.CommandFactory
  * Created by Timur Badretdinov (aka timurbadretdinov) 2019-09-08
  **/
 
-class ViewBuilderFactory {
+class ViewBuilderFactory @Inject constructor(
+    private var context: Context,
+    private var viewPropertiesFactory: ViewPropertiesFactory
+) {
 
-    private fun createMyEditText(element: Element, context: Context, commandFactory: CommandFactory): View {
+    private fun createMyEditText(element: Element): View {
 
-        return with(MyEditText()) {
-            create(element.view!!, context)
-            setValidation(element.validator!!)
-            setInputDataChanged {text ->
-               commandFactory.editTextCommand?.isValid(text, getValidation())
-            }
-
-            getView()
-        }
+        return EditTextBuilder(element, context, viewPropertiesFactory).create()
     }
 
-    private fun createRadio(myView: MyView, context: Context, commandFactory: CommandFactory): View {
-        val spinner = Spinner(context)
-        spinner.layoutParams =
-            LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-        val personNames = myView.widget.choices!!.map { it.title }
-        val arrayAdapter = ArrayAdapter(context, R.layout.simple_spinner_item, personNames)
-        spinner.adapter = arrayAdapter
-
-//        spinner.setOn
-        return spinner
+    private fun createRadio(element: Element): View {
+        return SpinnerBuilder(element, context, viewPropertiesFactory).create()
     }
 
-    fun createView(element: Element, context: Context, commandFactory: CommandFactory): View? {
+    fun createView(element: Element): View? {
         if (element.view == null) return null
 
-        return if (element.view.widget.type == "radio") {
-            createRadio(element.view, context, commandFactory)
+        return if (element.view.widget.type == ViewType.RADIO.type) {
+            createRadio(element)
         } else {
-            createMyEditText(element, context, commandFactory)
+            createMyEditText(element)
         }
     }
 

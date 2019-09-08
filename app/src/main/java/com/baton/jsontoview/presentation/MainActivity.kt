@@ -31,7 +31,8 @@ class MainActivity : MvpAppCompatActivity(), MainActivityView {
         Toast.makeText(this, "error occurred", Toast.LENGTH_SHORT).show()
     }
 
-    override fun createViews(views: List<View>) {
+    override fun showViews(views: List<View>) {
+//        llRoot.removeAllViews()
         views.forEach {
             llRoot.addView(it)
         }

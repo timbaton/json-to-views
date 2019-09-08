@@ -13,5 +13,5 @@ import com.arellomobile.mvp.MvpView
 interface MainActivityView : MvpView {
 
     fun showError()
-    fun createViews(views: List<View>)
+    fun showViews(views: List<View>)
 }

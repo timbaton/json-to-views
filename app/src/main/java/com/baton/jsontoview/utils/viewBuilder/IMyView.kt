@@ -1,9 +1,6 @@
 package com.baton.jsontoview.utils.viewBuilder
 
-import android.content.Context
 import android.view.View
-import com.baton.jsontoview.data.entity.MyView
-import com.baton.jsontoview.data.entity.Validator
 
 /**
  * Project jsontoview
@@ -14,17 +11,9 @@ import com.baton.jsontoview.data.entity.Validator
  */
 interface IMyView {
 
-    fun create(view: MyView, context: Context)
+    fun create(): View
 
-    fun setInputDataChanged(checkValidation: (text: String) -> Boolean?)
-
-    fun setValidation(validator: Validator)
-
-    fun setError(message: String)
-
-    fun removeError()
-
-    fun getValidation(): Validator
+    fun setInputDataChanged()
 
     fun getView(): View
 }

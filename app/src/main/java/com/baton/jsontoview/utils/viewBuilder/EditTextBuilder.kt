@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.baton.jsontoview.data.entity.MyView
-import com.baton.jsontoview.data.entity.Validator
+import com.baton.jsontoview.data.entity.Element
+import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
 import com.jakewharton.rxbinding.widget.RxTextView
-import java.lang.NullPointerException
 
 /**
  * Project jsontoview
@@ -18,10 +17,13 @@ import java.lang.NullPointerException
  * Created by Timur Badretdinov (aka timurbadretdinov) 2019-09-08
  *
  */
-class MyEditText : IMyView {
+class EditTextBuilder(
+    private var element: Element,
+    private var context: Context,
+    private var viewPropertiesFactory: ViewPropertiesFactory
+) : IMyView {
 
     private var mView: EditText? = null
-    private var validator: Validator? = null
 
     private val marginTop = 4
     private val marginBottom = 4
@@ -29,7 +31,7 @@ class MyEditText : IMyView {
     private val marginEnd = 16
 
 
-    override fun create(view: MyView, context: Context) {
+    override fun create(): View {
         val scale = context.resources.displayMetrics.density;
 
         // convert from px to dp
@@ -42,32 +44,33 @@ class MyEditText : IMyView {
         p.setMargins(marginStart.pxToDp(), marginTop.pxToDp(), marginEnd.pxToDp(), marginBottom.pxToDp())
         mView!!.layoutParams = p
 
-        mView!!.hint = view.prompt
+        mView!!.hint = element.view!!.prompt
+
+        setInputDataChanged()
+
+        return getView()
     }
 
-    override fun setValidation(validator: Validator) {
-        this.validator = validator
-    }
-
-    override fun getValidation(): Validator {
-        return validator?: throw NullPointerException("there is no validation")
-    }
-
-    override fun setInputDataChanged(checkValidation: (text: String) -> Boolean?) {
+    override fun setInputDataChanged() {
         RxTextView.textChanges(mView as TextView)
-            .subscribe {
-                val isValid = checkValidation(it.toString())
+            .subscribe { text ->
+                val isValid = element.validator?.let {
+                    viewPropertiesFactory.editTextCommand?.isValid(text.toString(), it.predicate.pattern)
+                }
+
                 if (isValid != null && !isValid) {
-                    setError(validator!!.message)
+                    element.validator?.message?.let { setError(it) }
+                } else {
+                    removeError()
                 }
             }
     }
 
-    override fun setError(message: String) {
+    private fun setError(message: String) {
         mView!!.error = message
     }
 
-    override fun removeError() {
+    private fun removeError() {
         mView!!.error = null;
     }
 

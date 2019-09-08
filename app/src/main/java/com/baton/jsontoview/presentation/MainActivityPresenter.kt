@@ -1,12 +1,11 @@
 package com.baton.jsontoview.presentation
 
-import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.baton.jsontoview.data.ViewsRepository
-import com.baton.jsontoview.utils.command.CommandFactory
-import com.baton.jsontoview.utils.command.EditTextCommand
-import com.baton.jsontoview.utils.command.SpinnerCommand
+import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
+import com.baton.jsontoview.utils.viewProperty.EditTextViewProperty
+import com.baton.jsontoview.utils.viewProperty.SpinnerViewProperty
 import com.baton.jsontoview.utils.viewBuilder.ViewCreator
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -21,29 +20,28 @@ import javax.inject.Inject
 @InjectViewState
 class MainActivityPresenter @Inject constructor(
     private var viewsRepository: ViewsRepository,
-    private var viewCreator: ViewCreator
+    private var viewCreator: ViewCreator,
+    private var viewPropertiesFactory: ViewPropertiesFactory
 ) : MvpPresenter<MainActivityView>() {
 
     private val compositeDisposable = CompositeDisposable()
-
-    private var commandFactory: CommandFactory? = null
 
     private var error = false
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
-        val spinnerOnAction = SpinnerCommand {
+        val spinnerViewProperty = SpinnerViewProperty {
             onSpinnerChanged()
         }
 
-        val editTextOnAction = EditTextCommand {
+        val editTextViewProperty = EditTextViewProperty {
             switchToError()
         }
 
-        commandFactory = CommandFactory().apply {
-            spinnerCommand = spinnerOnAction
-            editTextCommand = editTextOnAction
+        viewPropertiesFactory.apply {
+            spinnerCommand = spinnerViewProperty
+            editTextCommand = editTextViewProperty
         }
 
         loadViews()
@@ -53,8 +51,8 @@ class MainActivityPresenter @Inject constructor(
         compositeDisposable.add(
             viewsRepository.loadViews()
                 .subscribe({
-                    val views = viewCreator.getParsedViews(it.content, commandFactory!!)
-                    viewState.createViews(views)
+                    val views = viewCreator.getParsedViews(it.content)
+                    viewState.showViews(views)
                 }, {
                     viewState.showError()
                 })
@@ -68,14 +66,9 @@ class MainActivityPresenter @Inject constructor(
     }
 
     private fun onSpinnerChanged() {
-        Log.d("my tag", "spinner changed")
+        viewCreator.onSpinnerChanged()
+//        viewState.showViews(viewCreator.onSpinnerChanged())
     }
-
-
-    private fun showError(message: String) {
-        viewState
-    }
-
 
     private fun switchToError() {
         error = true
