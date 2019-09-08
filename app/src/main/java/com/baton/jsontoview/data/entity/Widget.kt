@@ -7,5 +7,12 @@ data class Widget(
     @SerializedName("choices")
     val choices: List<Choice>?,
     @SerializedName("type")
-    val type: String
+    val type: ViewType
 )
+
+enum class ViewType(val type: String) {
+    @SerializedName("field")
+    FIELD("field"),
+    @SerializedName("radio")
+    RADIO("radio")
+}

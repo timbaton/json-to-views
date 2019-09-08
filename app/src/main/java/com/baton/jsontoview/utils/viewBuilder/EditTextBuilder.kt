@@ -40,18 +40,18 @@ class EditTextBuilder(
         }
 
         mView = EditText(context)
-        val p = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        p.setMargins(marginStart.pxToDp(), marginTop.pxToDp(), marginEnd.pxToDp(), marginBottom.pxToDp())
-        mView!!.layoutParams = p
+        val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutParams.setMargins(marginStart.pxToDp(), marginTop.pxToDp(), marginEnd.pxToDp(), marginBottom.pxToDp())
+        mView!!.layoutParams = layoutParams
 
         mView!!.hint = element.view!!.prompt
 
-        setInputDataChanged()
+        setOnInputDataChanged()
 
         return getView()
     }
 
-    override fun setInputDataChanged() {
+    override fun setOnInputDataChanged() {
         RxTextView.textChanges(mView as TextView)
             .subscribe { text ->
                 val isValid = element.validator?.let {

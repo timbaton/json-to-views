@@ -11,7 +11,7 @@ data class Element(
     @SerializedName("name")
     val name: String,
     @SerializedName("type")
-    val type: String,
+    val type: ElementType,
     @SerializedName("validator")
     val validator: Validator?,
     @SerializedName("value")
@@ -21,3 +21,10 @@ data class Element(
     @SerializedName("semantics")
     val semantics: Semantics?
 )
+
+enum class ElementType(val type: String) {
+    @SerializedName("field")
+    FIELD("field"),
+    @SerializedName("dependency")
+    DEPENDENCY("dependency")
+}

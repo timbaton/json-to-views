@@ -3,7 +3,7 @@ package com.baton.jsontoview.utils.viewBuilder
 import android.content.Context
 import android.view.View
 import com.baton.jsontoview.data.entity.Element
-import com.baton.jsontoview.utils.enums.ViewType
+import com.baton.jsontoview.data.entity.ViewType
 import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
 import javax.inject.Inject
 
@@ -32,7 +32,7 @@ class ViewBuilderFactory @Inject constructor(
     fun createView(element: Element): View? {
         if (element.view == null) return null
 
-        return if (element.view.widget.type == ViewType.RADIO.type) {
+        return if (element.view.widget.type == ViewType.RADIO) {
             createRadio(element)
         } else {
             createMyEditText(element)

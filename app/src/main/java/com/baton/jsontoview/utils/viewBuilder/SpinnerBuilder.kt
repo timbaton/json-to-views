@@ -42,8 +42,9 @@ class SpinnerBuilder(
 
         val spinner = Spinner(context)
 
-        spinner.layoutParams =
-            LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutParams.setMargins(marginStart.pxToDp(), marginTop.pxToDp(), marginEnd.pxToDp(), marginBottom.pxToDp())
+        spinner.layoutParams = layoutParams
 
         val personNames = element.view!!.widget.choices!!.map { it.title }
         val arrayAdapter = ArrayAdapter(context, R.layout.simple_spinner_item, personNames)
@@ -51,12 +52,12 @@ class SpinnerBuilder(
 
         mView = spinner
 
-        setInputDataChanged()
+        setOnInputDataChanged()
 
         return getView()
     }
 
-    override fun setInputDataChanged() {
+    override fun setOnInputDataChanged() {
         mView!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

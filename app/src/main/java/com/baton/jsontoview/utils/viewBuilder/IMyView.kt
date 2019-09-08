@@ -13,7 +13,7 @@ interface IMyView {
 
     fun create(): View
 
-    fun setInputDataChanged()
+    fun setOnInputDataChanged()
 
     fun getView(): View
 }

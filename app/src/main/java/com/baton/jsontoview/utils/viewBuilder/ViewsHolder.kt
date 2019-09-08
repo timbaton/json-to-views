@@ -3,7 +3,7 @@ package com.baton.jsontoview.utils.viewBuilder
 import android.view.View
 import com.baton.jsontoview.data.entity.Content
 import com.baton.jsontoview.data.entity.Element
-import com.baton.jsontoview.utils.enums.ElementTypeEnum
+import com.baton.jsontoview.data.entity.ElementType
 import com.baton.jsontoview.utils.enums.Tags
 import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
 import javax.inject.Inject
@@ -17,7 +17,7 @@ import javax.inject.Inject
  *
  */
 
-class ViewCreator @Inject constructor(
+class ViewsHolder @Inject constructor(
     private var viewBuilderFactory: ViewBuilderFactory,
     private var viewPropertiesFactory: ViewPropertiesFactory
 ) {
@@ -27,9 +27,9 @@ class ViewCreator @Inject constructor(
 
     fun getParsedViews(content: Content): List<View> {
         content.elements.forEach { element ->
-            if (element.type == ElementTypeEnum.FIELD.type) {
+            if (element.type == ElementType.FIELD) {
                 createView(element)
-            } else if (element.type == ElementTypeEnum.DEPENDENCY.type) {
+            } else if (element.type == ElementType.DEPENDENCY) {
                 createDependentViews(element)
             }
         }
@@ -46,6 +46,8 @@ class ViewCreator @Inject constructor(
     private fun createDependentViews(element: Element) {
         element.content!!.elements.forEach {
             viewBuilderFactory.createView(it)?.let { createdView ->
+
+                //set tag for distinguishing kind of dependence to hide / show the view
                 createdView.setTag(Tags.FIELD.tag, element.condition!!.field)
                 createdView.setTag(Tags.PATTERN.tag, element.condition.predicate.pattern)
 
@@ -60,6 +62,7 @@ class ViewCreator @Inject constructor(
             val dependentField = view.getTag(Tags.FIELD.tag)
             val dependentPattern: String = view.getTag(Tags.PATTERN.tag) as String
 
+            //if the current state of the dependency type is correct - show the view
             val state = viewPropertiesFactory.spinnerCommand!!.states[dependentField]
             if (viewPropertiesFactory.spinnerCommand!!.isValid(state.toString(), dependentPattern)) {
                 view.visibility = View.VISIBLE

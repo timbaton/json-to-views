@@ -6,7 +6,7 @@ import com.baton.jsontoview.data.ViewsRepository
 import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
 import com.baton.jsontoview.utils.viewProperty.EditTextViewProperty
 import com.baton.jsontoview.utils.viewProperty.SpinnerViewProperty
-import com.baton.jsontoview.utils.viewBuilder.ViewCreator
+import com.baton.jsontoview.utils.viewBuilder.ViewsHolder
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ import javax.inject.Inject
 @InjectViewState
 class MainActivityPresenter @Inject constructor(
     private var viewsRepository: ViewsRepository,
-    private var viewCreator: ViewCreator,
+    private var viewsHolder: ViewsHolder,
     private var viewPropertiesFactory: ViewPropertiesFactory
 ) : MvpPresenter<MainActivityView>() {
 
@@ -51,7 +51,7 @@ class MainActivityPresenter @Inject constructor(
         compositeDisposable.add(
             viewsRepository.loadViews()
                 .subscribe({
-                    val views = viewCreator.getParsedViews(it.content)
+                    val views = viewsHolder.getParsedViews(it.content)
                     viewState.showViews(views)
                 }, {
                     viewState.showError()
@@ -66,8 +66,7 @@ class MainActivityPresenter @Inject constructor(
     }
 
     private fun onSpinnerChanged() {
-        viewCreator.onSpinnerChanged()
-//        viewState.showViews(viewCreator.onSpinnerChanged())
+        viewsHolder.onSpinnerChanged()
     }
 
     private fun switchToError() {
