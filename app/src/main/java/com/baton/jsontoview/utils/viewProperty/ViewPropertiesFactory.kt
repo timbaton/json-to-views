@@ -11,8 +11,8 @@ import javax.inject.Inject
  */
 class ViewPropertiesFactory @Inject constructor() {
 
-    var spinnerCommand: SpinnerViewProperty? = null
+    var spinnerProperty: SpinnerViewProperty? = null
 
-    var editTextCommand: EditTextViewProperty? = null
+    var editTextProperty: EditTextViewProperty? = null
 
 }

@@ -14,9 +14,6 @@ class SpinnerViewProperty(private var action: () -> Unit) : ViewProperty {
     var states = mutableMapOf<String, Int>()
     var field: String = ""
 
-//    val state = MutableLiveData<Int>()
-
-
     override fun onInputEdit(state: String) {
 
         states[field] = state.toInt()

@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.Spinner
 import com.baton.jsontoview.data.entity.Element
 import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
+import com.baton.jsontoview.utils.viewProperty.ViewProperty
 
 /**
  * Project jsontoview
@@ -25,6 +26,8 @@ class SpinnerBuilder(
 ) : IMyView {
 
     private var mView: Spinner? = null
+
+    private var viewProperty = viewPropertiesFactory.spinnerProperty
 
     private val marginTop = 4
     private val marginBottom = 4
@@ -65,8 +68,8 @@ class SpinnerBuilder(
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val text = element.view!!.widget.choices!![position].value
-                viewPropertiesFactory.spinnerCommand!!.field = element.name
-                viewPropertiesFactory.spinnerCommand!!.onInputEdit(text)
+                viewProperty!!.field = element.name
+                viewProperty!!.onInputEdit(text)
             }
         }
     }

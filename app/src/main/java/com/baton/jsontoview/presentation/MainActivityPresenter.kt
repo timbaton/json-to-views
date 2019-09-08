@@ -40,8 +40,8 @@ class MainActivityPresenter @Inject constructor(
         }
 
         viewPropertiesFactory.apply {
-            spinnerCommand = spinnerViewProperty
-            editTextCommand = editTextViewProperty
+            spinnerProperty = spinnerViewProperty
+            editTextProperty = editTextViewProperty
         }
 
         loadViews()

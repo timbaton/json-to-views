@@ -8,7 +8,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.baton.jsontoview.data.entity.Element
 import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
+import com.baton.jsontoview.utils.viewProperty.ViewProperty
 import com.jakewharton.rxbinding.widget.RxTextView
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 /**
  * Project jsontoview
@@ -53,9 +56,11 @@ class EditTextBuilder(
 
     override fun setOnInputDataChanged() {
         RxTextView.textChanges(mView as TextView)
+            .debounce(400, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe { text ->
                 val isValid = element.validator?.let {
-                    viewPropertiesFactory.editTextCommand?.isValid(text.toString(), it.predicate.pattern)
+                    viewPropertiesFactory.editTextProperty!!.isValid(text.toString(), it.predicate.pattern)
                 }
 
                 if (isValid != null && !isValid) {

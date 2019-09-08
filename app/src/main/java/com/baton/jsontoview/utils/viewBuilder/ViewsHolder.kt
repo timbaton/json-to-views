@@ -63,8 +63,8 @@ class ViewsHolder @Inject constructor(
             val dependentPattern: String = view.getTag(Tags.PATTERN.tag) as String
 
             //if the current state of the dependency type is correct - show the view
-            val state = viewPropertiesFactory.spinnerCommand!!.states[dependentField]
-            if (viewPropertiesFactory.spinnerCommand!!.isValid(state.toString(), dependentPattern)) {
+            val state = viewPropertiesFactory.spinnerProperty!!.states[dependentField]
+            if (viewPropertiesFactory.spinnerProperty!!.isValid(state.toString(), dependentPattern)) {
                 view.visibility = View.VISIBLE
             } else {
                 view.visibility = View.GONE
