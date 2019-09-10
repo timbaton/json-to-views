@@ -1,4 +1,4 @@
-package com.example.kyrs.di
+package com.baton.jsontoview.di
 
 import javax.inject.Qualifier
 

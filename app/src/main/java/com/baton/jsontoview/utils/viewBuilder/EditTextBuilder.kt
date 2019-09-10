@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.baton.jsontoview.data.entity.Element
+import com.baton.jsontoview.utils.pxToDp
 import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
 import com.baton.jsontoview.utils.viewProperty.ViewProperty
 import com.jakewharton.rxbinding.widget.RxTextView
@@ -35,16 +36,11 @@ class EditTextBuilder(
 
 
     override fun create(): View {
-        val scale = context.resources.displayMetrics.density;
-
-        // convert from px to dp
-        fun Int.pxToDp(): Int {
-            return (this * scale + 0.5f).toInt()
-        }
 
         mView = EditText(context)
         val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        layoutParams.setMargins(marginStart.pxToDp(), marginTop.pxToDp(), marginEnd.pxToDp(), marginBottom.pxToDp())
+
+        layoutParams.setMargins(marginStart.pxToDp(context), marginTop.pxToDp(context), marginEnd.pxToDp(context), marginBottom.pxToDp(context))
         mView!!.layoutParams = layoutParams
 
         mView!!.hint = element.view!!.prompt

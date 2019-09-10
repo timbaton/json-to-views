@@ -1,7 +1,7 @@
 package com.baton.jsontoview.di.providers
 
 import com.baton.jsontoview.data.ViewApi
-import com.example.kyrs.di.ServerPath
+import com.baton.jsontoview.di.ServerPath
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

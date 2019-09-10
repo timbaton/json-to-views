@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.Spinner
 import com.baton.jsontoview.data.entity.Element
+import com.baton.jsontoview.utils.pxToDp
 import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
 import com.baton.jsontoview.utils.viewProperty.ViewProperty
 
@@ -36,17 +37,11 @@ class SpinnerBuilder(
 
 
     override fun create(): View {
-        val scale = context.resources.displayMetrics.density;
-
-        // convert from px to dp
-        fun Int.pxToDp(): Int {
-            return (this * scale + 0.5f).toInt()
-        }
 
         val spinner = Spinner(context)
 
         val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        layoutParams.setMargins(marginStart.pxToDp(), marginTop.pxToDp(), marginEnd.pxToDp(), marginBottom.pxToDp())
+        layoutParams.setMargins(marginStart.pxToDp(context), marginTop.pxToDp(context), marginEnd.pxToDp(context), marginBottom.pxToDp(context))
         spinner.layoutParams = layoutParams
 
         val personNames = element.view!!.widget.choices!!.map { it.title }
@@ -63,7 +58,7 @@ class SpinnerBuilder(
     override fun setOnInputDataChanged() {
         mView!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                // do nothing
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

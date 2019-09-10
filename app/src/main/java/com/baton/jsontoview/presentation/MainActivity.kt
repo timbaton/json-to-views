@@ -32,7 +32,6 @@ class MainActivity : MvpAppCompatActivity(), MainActivityView {
     }
 
     override fun showViews(views: List<View>) {
-//        llRoot.removeAllViews()
         views.forEach {
             llRoot.addView(it)
         }
