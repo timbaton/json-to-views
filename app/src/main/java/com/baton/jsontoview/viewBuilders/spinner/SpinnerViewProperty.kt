@@ -1,15 +1,16 @@
-package com.baton.jsontoview.utils.viewProperty
+package com.baton.jsontoview.viewBuilders.spinner
 
+import com.baton.jsontoview.viewBuilders.IViewProperty
 import java.util.regex.Pattern
 
 /**
  * Project jsontoview
- * Package com.baton.jsontoview.utils.ViewProperty
+ * Package com.baton.jsontoview.utils.IViewProperty
  *
  * Created by Timur Badretdinov (aka timurbadretdinov) 2019-09-08
  *
  */
-class SpinnerViewProperty(private var action: () -> Unit) : ViewProperty {
+class SpinnerViewProperty(private var action: () -> Unit) : IViewProperty {
 
     var states = mutableMapOf<String, Int>()
     var field: String = ""

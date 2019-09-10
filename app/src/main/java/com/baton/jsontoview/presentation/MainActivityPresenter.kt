@@ -3,10 +3,10 @@ package com.baton.jsontoview.presentation
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.baton.jsontoview.data.ViewsRepository
-import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
-import com.baton.jsontoview.utils.viewProperty.EditTextViewProperty
-import com.baton.jsontoview.utils.viewProperty.SpinnerViewProperty
-import com.baton.jsontoview.utils.viewBuilder.ViewsHolder
+import com.baton.jsontoview.viewBuilders.factories.ViewPropertiesFactory
+import com.baton.jsontoview.viewBuilders.editText.EditTextViewProperty
+import com.baton.jsontoview.viewBuilders.spinner.SpinnerViewProperty
+import com.baton.jsontoview.viewBuilders.ViewsAdapter
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ import javax.inject.Inject
 @InjectViewState
 class MainActivityPresenter @Inject constructor(
     private var viewsRepository: ViewsRepository,
-    private var viewsHolder: ViewsHolder,
+    private var viewsAdapter: ViewsAdapter,
     private var viewPropertiesFactory: ViewPropertiesFactory
 ) : MvpPresenter<MainActivityView>() {
 
@@ -51,7 +51,7 @@ class MainActivityPresenter @Inject constructor(
         compositeDisposable.add(
             viewsRepository.loadViews()
                 .subscribe({
-                    val views = viewsHolder.getParsedViews(it.content)
+                    val views = viewsAdapter.getParsedViews(it.content)
                     viewState.showViews(views)
                 }, {
                     viewState.showError()
@@ -66,7 +66,7 @@ class MainActivityPresenter @Inject constructor(
     }
 
     private fun onSpinnerChanged() {
-        viewsHolder.onSpinnerChanged()
+        viewsAdapter.onSpinnerChanged()
     }
 
     private fun switchToError() {

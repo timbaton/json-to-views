@@ -1,11 +1,12 @@
-package com.baton.jsontoview.utils.viewBuilder
+package com.baton.jsontoview.viewBuilders
 
 import android.view.View
 import com.baton.jsontoview.data.entity.Content
 import com.baton.jsontoview.data.entity.Element
 import com.baton.jsontoview.data.entity.ElementType
 import com.baton.jsontoview.utils.enums.Tags
-import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
+import com.baton.jsontoview.viewBuilders.factories.ViewBuilderFactory
+import com.baton.jsontoview.viewBuilders.factories.ViewPropertiesFactory
 import javax.inject.Inject
 
 
@@ -17,7 +18,7 @@ import javax.inject.Inject
  *
  */
 
-class ViewsHolder @Inject constructor(
+class ViewsAdapter @Inject constructor(
     private var viewBuilderFactory: ViewBuilderFactory,
     private var viewPropertiesFactory: ViewPropertiesFactory
 ) {

@@ -1,4 +1,4 @@
-package com.baton.jsontoview.utils.viewBuilder
+package com.baton.jsontoview.viewBuilders.spinner
 
 import android.R
 import android.content.Context
@@ -10,8 +10,8 @@ import android.widget.LinearLayout
 import android.widget.Spinner
 import com.baton.jsontoview.data.entity.Element
 import com.baton.jsontoview.utils.pxToDp
-import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
-import com.baton.jsontoview.utils.viewProperty.ViewProperty
+import com.baton.jsontoview.viewBuilders.IViewBuilder
+import com.baton.jsontoview.viewBuilders.factories.ViewPropertiesFactory
 
 /**
  * Project jsontoview
@@ -24,7 +24,7 @@ class SpinnerBuilder(
     private var element: Element,
     private var context: Context,
     private var viewPropertiesFactory: ViewPropertiesFactory
-) : IMyView {
+) : IViewBuilder {
 
     private var mView: Spinner? = null
 

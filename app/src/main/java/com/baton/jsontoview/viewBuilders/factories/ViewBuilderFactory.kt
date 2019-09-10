@@ -1,10 +1,11 @@
-package com.baton.jsontoview.utils.viewBuilder
+package com.baton.jsontoview.viewBuilders.factories
 
 import android.content.Context
 import android.view.View
 import com.baton.jsontoview.data.entity.Element
 import com.baton.jsontoview.data.entity.ViewType
-import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
+import com.baton.jsontoview.viewBuilders.editText.EditTextBuilder
+import com.baton.jsontoview.viewBuilders.spinner.SpinnerBuilder
 import javax.inject.Inject
 
 

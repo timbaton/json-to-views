@@ -5,7 +5,7 @@ import com.baton.jsontoview.data.ViewApi
 import com.baton.jsontoview.di.ServerPath
 import com.baton.jsontoview.di.providers.ApiProvider
 import com.baton.jsontoview.di.providers.OkHttpClientProvider
-import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
+import com.baton.jsontoview.viewBuilders.factories.ViewPropertiesFactory
 import okhttp3.OkHttpClient
 import toothpick.config.Module
 

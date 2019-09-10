@@ -1,4 +1,4 @@
-package com.baton.jsontoview.utils.viewBuilder
+package com.baton.jsontoview.viewBuilders.editText
 
 import android.content.Context
 import android.view.View
@@ -8,8 +8,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.baton.jsontoview.data.entity.Element
 import com.baton.jsontoview.utils.pxToDp
-import com.baton.jsontoview.utils.viewProperty.ViewPropertiesFactory
-import com.baton.jsontoview.utils.viewProperty.ViewProperty
+import com.baton.jsontoview.viewBuilders.IViewBuilder
+import com.baton.jsontoview.viewBuilders.factories.ViewPropertiesFactory
 import com.jakewharton.rxbinding.widget.RxTextView
 import rx.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
@@ -25,7 +25,7 @@ class EditTextBuilder(
     private var element: Element,
     private var context: Context,
     private var viewPropertiesFactory: ViewPropertiesFactory
-) : IMyView {
+) : IViewBuilder {
 
     private var mView: EditText? = null
 

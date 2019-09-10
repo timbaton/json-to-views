@@ -1,4 +1,4 @@
-package com.baton.jsontoview.utils.viewBuilder
+package com.baton.jsontoview.viewBuilders
 
 import android.view.View
 
@@ -9,7 +9,7 @@ import android.view.View
  * Created by Timur Badretdinov (aka timurbadretdinov) 2019-09-08
  *
  */
-interface IMyView {
+interface IViewBuilder {
 
     fun create(): View
 
